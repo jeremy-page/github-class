@@ -1,0 +1,12 @@
+name: workflow1
+
+on: [push]
+
+jobs: 
+  run-github-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say hi to papa
+        uses: actions/hello-world-javascript-action@v1
+        with:
+          who-to-greet: Jeremy
