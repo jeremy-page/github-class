@@ -87,7 +87,7 @@ jobs:
                     {
                         "type": "Action.OpenUrl",
                         "title": "View Build",
-                        "url": "https://github.com/GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+                        "url": "https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
                     }
                 ],
                 "msteams": {
