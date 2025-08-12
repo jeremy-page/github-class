@@ -9,8 +9,9 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Send notification to Teams
-        uses: echapmanFromBunnings/msteams-connector-webhook@2.0.3
+      - name: Send Notification To Teams Channel
+        uses: a-kumar5/python-teams-notification-action@v0.2.0-alpha
         with:
-          webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
-          message: 'Hello world. This is a slug... &#x1F41B;'
+          url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          content: "pymsnotify sent this message from github actions."
+          title: "HELLO_TEAMS"
