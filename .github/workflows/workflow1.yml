@@ -10,10 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send notification to Teams
-        uses: chgeuer/github-action-microsoft-teams-notification@v1.0.0
+        uses: echapmanFromBunnings/msteams-connector-webhook@2.0.3
         with:
-          webhook-uri: ${{ secrets.TEAMS_WEBHOOK_URL }}
-          title: 'GitHub Action Run'
-          summary: 'A new push has been made to the main branch.'
-          text: 'Repository: ${{ github.repository }} | Commit: ${{ github.sha }}'
-          color: '0078D4' # This is Microsoft's blue color
+          webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          message: 'Hello world. This is a slug... &#x1F41B;'
