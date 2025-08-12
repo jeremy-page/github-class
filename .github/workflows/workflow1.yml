@@ -1,33 +1,19 @@
-name: build
+name: Teams Notification
+
 on:
-  pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
-  testJob:
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v3
-    - run: |
-        exit 0
-  build:
-    name: Checkout and notify
-    needs: [TestJob]
-    if: ${{always()}}
+  notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v1
-      - uses: freezer00/teams-webhook-action@v1.4.1
+      - name: Send notification to Teams
+        uses: chgeuer/github-action-microsoft-teams-notification@v1.0.0
         with:
-          webhook_url: ${{secrets.MS_WEBHOOK_URL}}
-          needs: ${{ toJson(needs) }}
-          job: ${{ toJson(job) }}
-          title: Custom title
-          additional_button_title: |-
-            Link to Google
-            Link to Microsoft
-          additional_button_url: |-
-            https://google.com
-            https://www.microsoft.com/de-de/microsoft-teams
-          hide_facts: false
-          dry_run: false
+          webhook-uri: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          title: 'GitHub Action Run'
+          summary: 'A new push has been made to the main branch.'
+          text: 'Repository: ${{ github.repository }} | Commit: ${{ github.sha }}'
+          color: '0078D4' # This is Microsoft's blue color
