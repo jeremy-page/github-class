@@ -1,4 +1,4 @@
-name: Teams Notification
+name: Send Adaptive Card to Teams
 
 on:
   push:
@@ -9,9 +9,34 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Send Notification To Teams Channel
-        uses: a-kumar5/python-teams-notification-action@v0.2.0-alpha
-        with:
-          url: ${{ secrets.TEAMS_WEBHOOK_URL }}
-          content: "pymsnotify sent this message from github actions."
-          title: "HELLO_TEAMS"
+      - name: Send Adaptive Card to Teams
+        env:
+          WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+        run: |
+          CARD='{
+            "type": "message",
+            "attachments": [
+              {
+                "contentType": "application/vnd.microsoft.card.adaptive",
+                "content": {
+                  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                  "type": "AdaptiveCard",
+                  "version": "1.4",
+                  "body": [
+                    {
+                      "type": "TextBlock",
+                      "text": "GitHub Action Notification",
+                      "weight": "Bolder",
+                      "size": "Medium"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "A push was made to main.",
+                      "wrap": true
+                    }
+                  ]
+                }
+              }
+            ]
+          }'
+          curl -H "Content-Type: application/json" -d "$CARD" "$WEBHOOK_URL"
