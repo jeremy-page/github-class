@@ -1,17 +1,33 @@
-    name: Teams Notification Workflow
+name: build
+on:
+  pull_request:
 
-    on: [push]
-
-    jobs:
-      build:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout code
-            uses: actions/checkout@v4
-
-          - name: Send Teams notification
-            uses: actions/microsoft-teams-webhook-message-bot@v1 # Example action
-            with:
-              webhookUri: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
-              message: "GitHub Actions workflow run completed for ${{ github.repository }} on branch ${{ github.ref_name }}!"
-              # You can also use 'adaptiveCard' for more complex messages
+jobs:
+  testJob:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v3
+    - run: |
+        exit 0
+  build:
+    name: Checkout and notify
+    needs: [TestJob]
+    if: ${{always()}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v1
+      - uses: freezer00/teams-webhook-action@v1.4.1
+        with:
+          webhook_url: ${{secrets.MS_WEBHOOK_URL}}
+          needs: ${{ toJson(needs) }}
+          job: ${{ toJson(job) }}
+          title: Custom title
+          additional_button_title: |-
+            Link to Google
+            Link to Microsoft
+          additional_button_url: |-
+            https://google.com
+            https://www.microsoft.com/de-de/microsoft-teams
+          hide_facts: false
+          dry_run: false
