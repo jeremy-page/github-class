@@ -1,21 +1,17 @@
-name: workflow1
+    name: Teams Notification Workflow
 
-on: [push]
+    on: [push]
 
-jobs: 
-  run-github-actions:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v1
-      - name: List Files
-        run: |
-          pwd
-          ls
-      - name: Say hi to papa
-        id: chocolate
-        uses: actions/hello-world-javascript-action@v1
-        with:
-          who-to-greet: Jeremy
-      - name: Log Greeting Time
-        run: echo "${{ steps.chocolate.outputs.time }}"
+    jobs:
+      build:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v4
+
+          - name: Send Teams notification
+            uses: actions/microsoft-teams-webhook-message-bot@v1 # Example action
+            with:
+              webhookUri: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+              message: "GitHub Actions workflow run completed for ${{ github.repository }} on branch ${{ github.ref_name }}!"
+              # You can also use 'adaptiveCard' for more complex messages
