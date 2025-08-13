@@ -9,12 +9,12 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - uses: neonidian/teams-notify-build-status@v3
+      - uses: neonidian/teams-notify-build-status@v4.1.0
         with:
           webhookUrl: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
           title: More testing                                      # Specify a title header
           message: >-
-              Sorry about the spam
+              Trying v4.1.0
         env: # Enable actor labels and buttons using environment variables
           SHOULD_DISPLAY_ACTOR_LABEL: true
           SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
