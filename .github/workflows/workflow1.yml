@@ -12,4 +12,10 @@ jobs:
       - uses: neonidian/teams-notify-build-status@v3
         with:
           webhookUrl: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
-          message: Workflow run passed !!
+          title: More testing                                      # Specify a title header
+          message: >-
+              Y U No WORK
+        env: # Enable actor labels and buttons using environment variables
+          SHOULD_DISPLAY_ACTOR_LABEL: true
+          SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
+          SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
