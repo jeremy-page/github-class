@@ -1,4 +1,4 @@
-name: Send Adaptive Card to Teams
+name: Send Adaptive Card to Teams - test
 
 on:
   push:
