@@ -9,13 +9,21 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - uses: neonidian/teams-notify-build-status@v3
-        with:
-          webhookUrl: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
-          title: More testing                                      # Specify a title header
-          message: >-
-              Y U No WORK
-        env: # Enable actor labels and buttons using environment variables
-          SHOULD_DISPLAY_ACTOR_LABEL: true
-          SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
-          SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
+      - name: Send Adaptive Card to Teams
+        env:
+          WEBHOOK_URL: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+        run: |
+          CARD='{
+            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+            "type": "AdaptiveCard",
+            "version": "1.4",
+            "body": [
+              {
+                "type": "TextBlock",
+                "text": "Test number 15!!",
+                "weight": "Bolder",
+                "size": "Medium"
+              }
+            ]
+          }'
+          curl -H "Content-Type: application/json" -d "$CARD" "$WEBHOOK_URL"
