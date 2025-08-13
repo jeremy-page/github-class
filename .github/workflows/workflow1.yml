@@ -14,7 +14,8 @@ jobs:
           webhookUrl: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
           title: More testing                                      # Specify a title header
           message: >-
-              $GITHUB_REF on $GITHUB_REPOSITORY has been updated.
+              Static Text Message
+          titleBackgroundColor: ${{ job.status }}
         env: # Enable actor labels and buttons using environment variables
           SHOULD_DISPLAY_ACTOR_LABEL: true
           SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
